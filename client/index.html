@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <script src="socket.io.js"></script>
+    <script>
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJzdGF0dXMiOiJBQ1RJVkUiLCJyb2xlIjoiQURNSU4iLCJyb2xlSWQiOjEsInBlcm1pc3Npb25zIjpbIkFMTCJdLCJ0YWJsZSI6InVzZXJzIiwiaWRGb3JlaWduS2V5IjoidXNlcklkIiwiaWF0IjoxNjAyODI1NTE5LCJleHAiOjE2MDgwMDk1MTl9.MBCoWbr38nYFz_K7LEHdizAcSw6eOMeW34HAklNj6Vk'
+      /**
+       * Test
+       */
+      const socket = io.connect('http://localhost:3000/', {
+        query: {token}
+      });
+      socket.on('disconnect', function() {
+        console.log('Disconnected');
+      });
+
+      socket.emit('chat', {
+        text: `[Admin][${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}] Oh Hello There`,
+        user: {
+          _id: '5f8fc163bc41f821f8db09b0' // Operator
+        }
+      });
+
+      socket.emit('chatting', {
+        user: {
+          _id: '5f8fc163bc41f821f8db09b0' // Operator
+        }
+      });
+
+
+      socket.on('chatting', function(data) {
+        console.log('chatting', data);
+      });
+
+      socket.on('trigger_active', function(data) {
+        console.log('trigger_active', data);
+      });
+
+      socket.on('chat', function(data) {
+        console.log('message', data);
+      });
+    </script>
+  </head>
+
+  <body></body>
+</html>

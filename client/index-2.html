@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <script src="socket.io.js"></script>
+    <script>
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJvcGVyYXRvckBnbWFpbC5jb20iLCJzdGF0dXMiOiJBQ1RJVkUiLCJyb2xlIjoiT1BFUkFUT1IiLCJyb2xlSWQiOjIsInBlcm1pc3Npb25zIjpbIlNFTEZfUFJPVklERVJfUEVSTUFORU5UTFlfREVMRVRFIiwiU0VMRl9QUk9WSURFUl9ERUxFVEUiLCJTRUxGX1BST1ZJREVSX1VQREFURSIsIlBST1ZJREVSX1BFUk1BTkVOVExZX0RFTEVURSIsIlBST1ZJREVSX0RFTEVURSIsIlBST1ZJREVSX1VQREFURSIsIlBST1ZJREVSX0NSRUFURSIsIkJJTExfU0VSVklDRV9QRVJNQU5FTlRMWV9ERUxFVEUiLCJCSUxMX1NFUlZJQ0VfREVMRVRFIiwiQklMTF9TRVJWSUNFX1VQREFURSIsIkJJTExfU0VSVklDRV9DUkVBVEUiLCJCSUxMX0lORk9fUEVSTUFORU5UTFlfREVMRVRFIiwiQklMTF9JTkZPX0RFTEVURSIsIkJJTExfSU5GT19VUERBVEUiLCJCSUxMX0lORk9fQ1JFQVRFIiwiQklMTF9QRVJNQU5FTlRMWV9ERUxFVEUiLCJCSUxMX0RFTEVURSIsIkJJTExfVVBEQVRFIiwiQklMTF9DUkVBVEUiLCJTRVJWSUNFX1BFUk1BTkVOVExZX0RFTEVURSIsIlNFUlZJQ0VfREVMRVRFIiwiU0VSVklDRV9VUERBVEUiLCJTRVJWSUNFX0NSRUFURSIsIkRFU1RJTkFUSU9OX1BFUk1BTkVOVExZX0RFTEVURSIsIkRFU1RJTkFUSU9OX0RFTEVURSIsIkRFU1RJTkFUSU9OX1VQREFURSIsIkRFU1RJTkFUSU9OX0NSRUFURSIsIlNFUlZJQ0VfQ0FURUdPUllfUEVSTUFORU5UTFlfREVMRVRFIiwiU0VSVklDRV9DQVRFR09SWV9ERUxFVEUiLCJTRVJWSUNFX0NBVEVHT1JZX1VQREFURSIsIlNFUlZJQ0VfQ0FURUdPUllfQ1JFQVRFIiwiTUVESUFfUEVSTUFORU5UTFlfREVMRVRFIiwiTUVESUFfREVMRVRFIiwiTUVESUFfVVBEQVRFIiwiTUVESUFfQ1JFQVRFIiwiTUVESUFfUkVBRCJdLCJ0YWJsZSI6InVzZXJzIiwiaWRGb3JlaWduS2V5IjoidXNlcklkIiwiaWF0IjoxNjAyOTEzOTAxLCJleHAiOjE2MDgwOTc5MDF9.JowNeI19bHJpxjgMKu02rM3SRjTBiDcRVIDLo7CIRY0'
+      /**
+       * Test
+       */
+      const socket = io.connect('http://localhost:3000/', {
+        query: {token}
+      });
+      socket.on('disconnect', function() {
+        console.log('Disconnected');
+      });
+
+
+      // socket.emit('join', '0327571918');
+      // socket.emit('message', {'message': `[Operator][${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}] Oh Hello There`, 'room':'0327571918'});
+      
+      // socket.emit('chat', {
+      //   text: `[Operator][${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}] Oh Hello There`,
+      //   user: {
+      //     _id: '5f8fc164bc41f821f8db09b2' // admin
+      //   }
+      // });
+
+      socket.emit('chatting', {
+        user: {
+          _id: '5f8fc164bc41f821f8db09b2' // Admin
+        }
+      });
+
+      socket.emit('typing', {
+        user: {
+          _id: '5f8fc164bc41f821f8db09b2' // Admin
+        }
+      });
+
+      setTimeout(() => {
+        socket.emit('stop_typing', {
+        user: {
+          _id: '5f8fc164bc41f821f8db09b2' // Admin
+        }
+        });
+      },3000)
+      
+      socket.on('chatting', function(data) {
+        console.log('chatting', data);
+      });
+
+      socket.on('trigger_active', function(data) {
+        console.log('trigger_active', data);
+      });
+
+      socket.on('chat', function(data) {
+        console.log('message', data);
+      });
+    </script>
+  </head>
+
+  <body></body>
+</html>
